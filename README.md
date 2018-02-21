@@ -1,3 +1,4 @@
+基于spring boot，netty，protostuff(protobuf)
 ## 正在持续完善中。。。
 ### server-engine
 服务端引擎，负责编解码，请求事件分派，心跳检测等
