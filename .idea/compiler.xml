@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="client-test" />
+        <module name="proto-expose" />
+        <module name="server-engine" />
+        <module name="server-test" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="client-test" target="1.8" />
+      <module name="game-server" target="1.8" />
+      <module name="proto-expose" target="1.8" />
+      <module name="server-engine" target="1.8" />
+      <module name="server-test" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>
