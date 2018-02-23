@@ -1,5 +1,6 @@
 package com.dredh.codec.protostuff;
 
+import com.dredh.codec.CodecInitializer;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
@@ -9,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ProtostuffHandlerInitializer extends ChannelInitializer<Channel> {
+public class ProtostuffHandlerInitializer extends ChannelInitializer<Channel> implements CodecInitializer {
 
     @Autowired
     private ProtostuffMessageDecoder protostuffMessageDecoder;

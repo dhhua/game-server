@@ -1,5 +1,6 @@
 package com.dredh.codec.protostuff;
 
+import com.dredh.codec.Message;
 import com.dyuproject.protostuff.LinkedBuffer;
 import com.dyuproject.protostuff.ProtostuffIOUtil;
 import com.dyuproject.protostuff.Schema;
@@ -14,19 +15,19 @@ import java.util.List;
 
 @ChannelHandler.Sharable
 @Component
-public class ProtostuffMessageEncoder extends MessageToMessageEncoder<ProtostuffMessage> {
+public class ProtostuffMessageEncoder extends MessageToMessageEncoder<Message> {
 
     @Override
-    protected void encode(ChannelHandlerContext context, ProtostuffMessage protostuffMessage, List<Object> out) throws Exception {
+    protected void encode(ChannelHandlerContext context, Message message, List<Object> out) throws Exception {
 
-        Schema<ProtostuffMessage> schema = RuntimeSchema.getSchema(ProtostuffMessage.class);
+        Schema<Message> schema = RuntimeSchema.getSchema(Message.class);
 
         // Re-use (manage) this buffer to avoid allocating on every serialization
         LinkedBuffer buffer = LinkedBuffer.allocate(512);
 
         final byte[] protostuff;
         try {
-            protostuff = ProtostuffIOUtil.toByteArray(protostuffMessage, schema, buffer);
+            protostuff = ProtostuffIOUtil.toByteArray(message, schema, buffer);
         } finally {
             buffer.clear();
         }

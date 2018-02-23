@@ -10,7 +10,7 @@
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>server-engine</module>
-        <module>proto-expose</module>
+        <module>proto-export</module>
         <module>client-test</module>
         <module>server-test</module>
     </modules>
@@ -32,6 +32,8 @@
             <artifactId>netty-all</artifactId>
             <version>4.1.15.Final</version>
         </dependency>
+
+
         <!-- https://mvnrepository.com/artifact/com.dyuproject.protostuff/protostuff-core -->
         <dependency>
             <groupId>com.dyuproject.protostuff</groupId>

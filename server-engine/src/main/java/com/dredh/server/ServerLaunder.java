@@ -1,8 +1,8 @@
 package com.dredh.server;
 
 import com.dredh.codec.CodecFacade;
+import com.dredh.codec.CodecInitializer;
 import com.dredh.codec.protostuff.ProtostuffCodecFacade;
-import com.dredh.codec.protostuff.ProtostuffHandlerInitializer;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelOption;
 import io.netty.channel.nio.NioEventLoopGroup;
@@ -40,7 +40,10 @@ public class ServerLaunder {
     private int backlog;
 
     @Autowired
-    private ProtostuffHandlerInitializer serverHandlerInitializer;
+    private ServerHandlerInitializer serverHandlerInitializer;
+
+    @Autowired
+    private CodecInitializer codecInitializer;
 
     @Bean
     public CodecFacade codecFacade() {
@@ -53,6 +56,7 @@ public class ServerLaunder {
                 .channel(NioServerSocketChannel.class)
                 .handler(new LoggingHandler(LogLevel.DEBUG))
                 .childHandler(serverHandlerInitializer);
+
         Map<ChannelOption<?>, Object> tcpChannelOptions = tcpChannelOptions();
         Set<ChannelOption<?>> keySet = tcpChannelOptions.keySet();
         for (@SuppressWarnings("rawtypes") ChannelOption option : keySet) {

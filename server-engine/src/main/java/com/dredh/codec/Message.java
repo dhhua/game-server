@@ -1,17 +1,22 @@
-package com.dredh.codec.protostuff;
+package com.dredh.codec;
 
 import com.dredh.model.CommandRequest;
 import com.dredh.model.CommandResponse;
 import com.google.common.base.MoreObjects;
 
-public class ProtostuffMessage implements CommandRequest, CommandResponse {
+public class Message implements CommandRequest, CommandResponse {
 
     private byte type;
 
     private String route;
     private byte[] body;
 
-    public ProtostuffMessage (byte type, String route, byte[] body) {
+    public Message(byte type) {
+        this.type = type;
+        route = "";
+    }
+
+    public Message(byte type, String route, byte[] body) {
         this.type = type;
         this.route = route;
         this.body = body;

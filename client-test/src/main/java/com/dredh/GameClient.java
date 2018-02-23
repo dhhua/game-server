@@ -1,6 +1,6 @@
 package com.dredh;
 
-import com.dredh.codec.protostuff.ProtostuffMessage;
+import com.dredh.codec.Message;
 import com.dyuproject.protostuff.LinkedBuffer;
 import com.dyuproject.protostuff.ProtostuffIOUtil;
 import com.dyuproject.protostuff.Schema;
@@ -41,7 +41,7 @@ public class GameClient {
                 } finally {
                     buffer.clear();
                 }
-                ch.writeAndFlush(new ProtostuffMessage((byte)1, "test.TestHandler.test", protostuff));
+                ch.writeAndFlush(new Message((byte)1, "test.TestHandler.test", protostuff));
             }
             // Close the connection.
             //ch.closeFuture().sync();

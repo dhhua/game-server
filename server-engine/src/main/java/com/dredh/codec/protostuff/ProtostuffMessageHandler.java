@@ -1,5 +1,6 @@
 package com.dredh.codec.protostuff;
 
+import com.dredh.codec.Message;
 import com.dredh.codec.RouterMapper;
 import com.dredh.model.CommandResponse;
 import com.dyuproject.protostuff.LinkedBuffer;
@@ -14,12 +15,12 @@ import org.springframework.stereotype.Component;
 
 @Component
 @ChannelHandler.Sharable
-public class ProtostuffMessageHandler extends SimpleChannelInboundHandler<ProtostuffMessage> {
+public class ProtostuffMessageHandler extends SimpleChannelInboundHandler<Message> {
     @Autowired
     private RouterMapper routerMapper;
 
     @Override
-    protected void channelRead0(ChannelHandlerContext context, ProtostuffMessage msg) {
+    protected void channelRead0(ChannelHandlerContext context, Message msg) {
         Object result = routerMapper.getHandler(msg.getRoute()).handleRequest(msg);
         Schema schema = RuntimeSchema.getSchema(result.getClass());
 
@@ -33,7 +34,7 @@ public class ProtostuffMessageHandler extends SimpleChannelInboundHandler<Protos
             buffer.clear();
         }
 
-        CommandResponse response = new ProtostuffMessage(msg.getType(), msg.getRoute(), protostuff);
+        CommandResponse response = new Message(msg.getType(), msg.getRoute(), protostuff);
         context.write(response);
     }
 

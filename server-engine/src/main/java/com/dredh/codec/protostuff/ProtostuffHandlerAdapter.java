@@ -1,5 +1,6 @@
 package com.dredh.codec.protostuff;
 
+import com.dredh.codec.Message;
 import com.dredh.handler.Handler;
 import com.dyuproject.protostuff.ProtostuffIOUtil;
 import com.dyuproject.protostuff.Schema;
@@ -8,7 +9,7 @@ import com.dyuproject.protostuff.runtime.RuntimeSchema;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-public class ProtostuffHandlerAdapter implements Handler<ProtostuffMessage, Object> {
+public class ProtostuffHandlerAdapter implements Handler<Message, Object> {
 
     private Method commandMethod;
     private Class parameterClazz;
@@ -21,7 +22,7 @@ public class ProtostuffHandlerAdapter implements Handler<ProtostuffMessage, Obje
     }
 
     @Override
-    public Object handleRequest(ProtostuffMessage request) {
+    public Object handleRequest(Message request) {
         Object[] parameters = null;
         if (parameterClazz != null) {
             Schema schema = RuntimeSchema.getSchema(parameterClazz);

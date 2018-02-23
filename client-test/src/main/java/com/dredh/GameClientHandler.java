@@ -1,10 +1,10 @@
 package com.dredh;
 
-import com.dredh.codec.protostuff.ProtostuffMessage;
+import com.dredh.codec.Message;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 
-public class GameClientHandler extends SimpleChannelInboundHandler<ProtostuffMessage> {
+public class GameClientHandler extends SimpleChannelInboundHandler<Message> {
 
     private ChannelHandlerContext ctx;
     @Override
@@ -15,7 +15,7 @@ public class GameClientHandler extends SimpleChannelInboundHandler<ProtostuffMes
     }
 
     @Override
-    protected void channelRead0(ChannelHandlerContext channelHandlerContext, ProtostuffMessage protostuffMessage) throws Exception {
-        System.out.println(protostuffMessage);
+    protected void channelRead0(ChannelHandlerContext channelHandlerContext, Message message) throws Exception {
+        System.out.println(message);
     }
 }

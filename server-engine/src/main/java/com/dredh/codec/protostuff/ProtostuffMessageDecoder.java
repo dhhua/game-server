@@ -1,5 +1,6 @@
 package com.dredh.codec.protostuff;
 
+import com.dredh.codec.Message;
 import com.dyuproject.protostuff.ProtostuffIOUtil;
 import com.dyuproject.protostuff.Schema;
 import com.dyuproject.protostuff.runtime.RuntimeSchema;
@@ -29,8 +30,8 @@ public class ProtostuffMessageDecoder extends MessageToMessageDecoder<ByteBuf> {
             offset = 0;
         }
 
-        Schema<ProtostuffMessage> schema = RuntimeSchema.getSchema(ProtostuffMessage.class);
-        ProtostuffMessage result = schema.newMessage();
+        Schema<Message> schema = RuntimeSchema.getSchema(Message.class);
+        Message result = schema.newMessage();
         ProtostuffIOUtil.mergeFrom(array, offset, length, result, schema);
         out.add(result);
     }
