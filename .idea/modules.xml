@@ -3,9 +3,14 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/client-test/client-test.iml" filepath="$PROJECT_DIR$/client-test/client-test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/client-test/client-test.iml" filepath="$PROJECT_DIR$/client-test/client-test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/game-server.iml" filepath="$PROJECT_DIR$/game-server.iml" />
       <module fileurl="file://$PROJECT_DIR$/game-server.iml" filepath="$PROJECT_DIR$/game-server.iml" />
       <module fileurl="file://$PROJECT_DIR$/proto-export/proto-export.iml" filepath="$PROJECT_DIR$/proto-export/proto-export.iml" />
+      <module fileurl="file://$PROJECT_DIR$/proto-export/proto-export.iml" filepath="$PROJECT_DIR$/proto-export/proto-export.iml" />
       <module fileurl="file://$PROJECT_DIR$/server-engine/server-engine.iml" filepath="$PROJECT_DIR$/server-engine/server-engine.iml" />
+      <module fileurl="file://$PROJECT_DIR$/server-engine/server-engine.iml" filepath="$PROJECT_DIR$/server-engine/server-engine.iml" />
+      <module fileurl="file://$PROJECT_DIR$/server-test/server-test.iml" filepath="$PROJECT_DIR$/server-test/server-test.iml" />
       <module fileurl="file://$PROJECT_DIR$/server-test/server-test.iml" filepath="$PROJECT_DIR$/server-test/server-test.iml" />
     </modules>
   </component>

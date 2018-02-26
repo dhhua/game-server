@@ -2,6 +2,7 @@ package com.dredh;
 
 import com.dredh.codec.protostuff.ProtostuffMessageDecoder;
 import com.dredh.codec.protostuff.ProtostuffMessageEncoder;
+import com.dredh.model.Message;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;

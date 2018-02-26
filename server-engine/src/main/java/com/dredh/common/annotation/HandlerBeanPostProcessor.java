@@ -1,6 +1,7 @@
 package com.dredh.common.annotation;
 
-import com.dredh.codec.CodecFacade;
+import com.dredh.codec.RouterMapper;
+import com.dredh.handler.HandlerMapping;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanPostProcessor;
@@ -13,7 +14,7 @@ import java.lang.reflect.Method;
 @Component
 public class HandlerBeanPostProcessor implements BeanPostProcessor {
     @Autowired
-    private CodecFacade codecFacade;
+    private RouterMapper routerMapper;
     @Override
     public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
         return bean;
@@ -29,10 +30,14 @@ public class HandlerBeanPostProcessor implements BeanPostProcessor {
                     StringBuilder handlerName = new StringBuilder(commandHandler.name());
                     handlerName.append("." + bean.getClass().getSimpleName());
                     handlerName.append("." + method.getName());
-                    codecFacade.registerHandler(handlerName.toString(),bean, method);
+                    Class parameterClazz = null;
+                    if (method.getParameterTypes().length > 0) {
+                        parameterClazz = method.getParameterTypes()[0];
+                    }
+                    HandlerMapping handlerMapping = new HandlerMapping(method, parameterClazz, bean);
+                    routerMapper.registerHandler(handlerName.toString(), handlerMapping);
                 }
             }
-            System.out.println(bean.getClass().getSimpleName());
         }
         return bean;
     }

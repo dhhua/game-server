@@ -1,38 +1,44 @@
 package com.dredh.codec.protostuff;
 
-import com.dredh.codec.Message;
-import com.dyuproject.protostuff.LinkedBuffer;
-import com.dyuproject.protostuff.ProtostuffIOUtil;
-import com.dyuproject.protostuff.Schema;
-import com.dyuproject.protostuff.runtime.RuntimeSchema;
-import io.netty.buffer.Unpooled;
+import com.dredh.model.Message;
+import com.dredh.util.ProtobufUtil;
+import com.dredh.util.ProtostuffSerializeUtil;
+import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
-import io.netty.handler.codec.MessageToMessageEncoder;
+import io.netty.handler.codec.MessageToByteEncoder;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
 
 @ChannelHandler.Sharable
 @Component
-public class ProtostuffMessageEncoder extends MessageToMessageEncoder<Message> {
+public class ProtostuffMessageEncoder extends MessageToByteEncoder<Message> {
+
+    static void writeRawVarint32(ByteBuf out, int value) {
+        while (true) {
+            if ((value & ~0x7F) == 0) {
+                out.writeByte(value);
+                return;
+            } else {
+                out.writeByte((value & 0x7F) | 0x80);
+                value >>>= 7;
+            }
+        }
+    }
 
     @Override
-    protected void encode(ChannelHandlerContext context, Message message, List<Object> out) throws Exception {
-
-        Schema<Message> schema = RuntimeSchema.getSchema(Message.class);
-
-        // Re-use (manage) this buffer to avoid allocating on every serialization
-        LinkedBuffer buffer = LinkedBuffer.allocate(512);
-
-        final byte[] protostuff;
-        try {
-            protostuff = ProtostuffIOUtil.toByteArray(message, schema, buffer);
-        } finally {
-            buffer.clear();
+    protected void encode(ChannelHandlerContext ctx, Message message, ByteBuf out) throws Exception {
+        byte[] header = ProtostuffSerializeUtil.encode(message.getHeader());
+        int headerLen = ProtobufUtil.computeRawVarint32Size(header.length);
+        writeRawVarint32(out, headerLen);
+        if (message.getBody() != null) {
+            byte[] body = ProtostuffSerializeUtil.encode(message.getBody());
+            out.ensureWritable(headerLen + header.length + body.length);
+            out.writeBytes(header);
+            out.writeBytes(body);
+        } else {
+            out.ensureWritable(headerLen + header.length);
+            out.writeBytes(header);
         }
-
-        out.add(Unpooled.wrappedBuffer(protostuff));
-
     }
+
 }

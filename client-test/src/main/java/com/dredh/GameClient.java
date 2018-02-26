@@ -1,10 +1,7 @@
 package com.dredh;
 
-import com.dredh.codec.Message;
-import com.dyuproject.protostuff.LinkedBuffer;
-import com.dyuproject.protostuff.ProtostuffIOUtil;
-import com.dyuproject.protostuff.Schema;
-import com.dyuproject.protostuff.runtime.RuntimeSchema;
+import com.dredh.model.CmdHeader;
+import com.dredh.model.Message;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;
 import io.netty.channel.EventLoopGroup;
@@ -30,18 +27,7 @@ public class GameClient {
 
             while (true) {
                 Thread.sleep(1000);
-                Schema<String> schema = RuntimeSchema.getSchema(String.class);
-
-                // Re-use (manage) this buffer to avoid allocating on every serialization
-                LinkedBuffer buffer = LinkedBuffer.allocate(512);
-
-                final byte[] protostuff;
-                try {
-                    protostuff = ProtostuffIOUtil.toByteArray("testRequest", schema, buffer);
-                } finally {
-                    buffer.clear();
-                }
-                ch.writeAndFlush(new Message((byte)1, "test.TestHandler.test", protostuff));
+                ch.writeAndFlush(new Message(new CmdHeader((byte)1, "test.TestHandler.test", true), "test"));
             }
             // Close the connection.
             //ch.closeFuture().sync();

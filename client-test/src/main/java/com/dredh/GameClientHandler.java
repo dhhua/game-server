@@ -1,6 +1,6 @@
 package com.dredh;
 
-import com.dredh.codec.Message;
+import com.dredh.model.Message;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 

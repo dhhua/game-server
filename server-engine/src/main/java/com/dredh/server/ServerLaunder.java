@@ -1,8 +1,6 @@
 package com.dredh.server;
 
-import com.dredh.codec.CodecFacade;
 import com.dredh.codec.CodecInitializer;
-import com.dredh.codec.protostuff.ProtostuffCodecFacade;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelOption;
 import io.netty.channel.nio.NioEventLoopGroup;
@@ -45,10 +43,6 @@ public class ServerLaunder {
     @Autowired
     private CodecInitializer codecInitializer;
 
-    @Bean
-    public CodecFacade codecFacade() {
-        return new ProtostuffCodecFacade();
-    }
     @Bean
     public ServerBootstrap bootstrap() {
         ServerBootstrap b = new ServerBootstrap();
