@@ -11,4 +11,6 @@ import java.lang.annotation.*;
 public @interface CommandHandler {
 
     String name();
+
+    String sub() default "";
 }

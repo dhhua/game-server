@@ -7,8 +7,6 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="client-test" />
-        <module name="proto-export" />
-        <module name="proto-expose" />
         <module name="server-engine" />
         <module name="server-test" />
       </profile>

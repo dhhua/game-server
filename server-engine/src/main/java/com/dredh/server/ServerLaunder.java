@@ -1,6 +1,7 @@
 package com.dredh.server;
 
 import com.dredh.codec.CodecInitializer;
+import com.dredh.codec.protostuff.ProtostuffHandlerInitializer;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelOption;
 import io.netty.channel.nio.NioEventLoopGroup;
@@ -9,6 +10,7 @@ import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
@@ -19,6 +21,7 @@ import java.util.Map;
 import java.util.Set;
 
 @Configuration
+@ConditionalOnProperty(value = "isServer", havingValue = "true")
 @PropertySource("BOOT-INF/serverConfig.properties")
 public class ServerLaunder {
 
@@ -40,9 +43,10 @@ public class ServerLaunder {
     @Autowired
     private ServerHandlerInitializer serverHandlerInitializer;
 
-    @Autowired
-    private CodecInitializer codecInitializer;
-
+    @Bean
+    public CodecInitializer getCodecInitializer() {
+        return new ProtostuffHandlerInitializer();
+    }
     @Bean
     public ServerBootstrap bootstrap() {
         ServerBootstrap b = new ServerBootstrap();

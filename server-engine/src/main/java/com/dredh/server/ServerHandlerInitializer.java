@@ -7,14 +7,14 @@ import io.netty.channel.Channel;
 import io.netty.channel.ChannelInitializer;
 import io.netty.handler.timeout.IdleStateHandler;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.stereotype.Component;
 
 import java.util.concurrent.TimeUnit;
 
-/**
- * Created by honghua.dong on 2017/8/30.
- */
 @Component
+@ConditionalOnBean(ServerLaunder.class)
 public class ServerHandlerInitializer extends ChannelInitializer<Channel> {
 
     @Autowired

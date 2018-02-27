@@ -1,13 +1,16 @@
 package com.dredh.codec;
 
 import com.dredh.handler.HandlerMapping;
-import org.springframework.stereotype.Component;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-@Component
 public class RouterMapper {
+
+    private static final RouterMapper instance = new RouterMapper();
+
+    private RouterMapper() {
+    }
 
     private Map<String, HandlerMapping> map = new ConcurrentHashMap<>();
 
@@ -17,5 +20,9 @@ public class RouterMapper {
 
     public HandlerMapping getHandlerMapping(String name) {
         return map.get(name);
+    }
+
+    public static RouterMapper getInstance() {
+        return instance;
     }
 }

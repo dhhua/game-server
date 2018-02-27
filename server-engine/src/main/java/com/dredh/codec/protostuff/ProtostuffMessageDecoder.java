@@ -1,6 +1,7 @@
 package com.dredh.codec.protostuff;
 
 import com.dredh.codec.RouterMapper;
+import com.dredh.constants.MessageType;
 import com.dredh.handler.HandlerMapping;
 import com.dredh.model.CmdHeader;
 import com.dredh.model.Message;
@@ -10,17 +11,12 @@ import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToMessageDecoder;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 @ChannelHandler.Sharable
-@Component
 public class ProtostuffMessageDecoder extends MessageToMessageDecoder<ByteBuf> {
 
-    @Autowired
-    private RouterMapper routerMapper;
     @Override
     protected void decode(ChannelHandlerContext channelHandlerContext, ByteBuf in, List<Object> out) {
 
@@ -39,10 +35,10 @@ public class ProtostuffMessageDecoder extends MessageToMessageDecoder<ByteBuf> {
         int varint32Len = ProtobufUtil.computeRawVarint32Size(headerLen);
 
         CmdHeader header = ProtostuffSerializeUtil.decode(array, offset + varint32Len, headerLen, CmdHeader.class);
-        HandlerMapping handlerMapping = routerMapper.getHandlerMapping(header.getRoute());
+        HandlerMapping handlerMapping = RouterMapper.getInstance().getHandlerMapping(header.getRoute());
 
         Object parameter = null;
-        if (header.isHasBody() && handlerMapping.getParameterClazz() != null) {
+        if (header.getType() == MessageType.CMD && header.isHasBody() && handlerMapping.getParameterClazz() != null) {
             parameter = ProtostuffSerializeUtil.decode(
                     array,
                     offset + varint32Len + headerLen,

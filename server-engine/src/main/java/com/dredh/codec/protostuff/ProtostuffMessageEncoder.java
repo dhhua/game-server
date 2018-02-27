@@ -7,10 +7,8 @@ import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToByteEncoder;
-import org.springframework.stereotype.Component;
 
 @ChannelHandler.Sharable
-@Component
 public class ProtostuffMessageEncoder extends MessageToByteEncoder<Message> {
 
     static void writeRawVarint32(ByteBuf out, int value) {
@@ -29,7 +27,7 @@ public class ProtostuffMessageEncoder extends MessageToByteEncoder<Message> {
     protected void encode(ChannelHandlerContext ctx, Message message, ByteBuf out) throws Exception {
         byte[] header = ProtostuffSerializeUtil.encode(message.getHeader());
         int headerLen = ProtobufUtil.computeRawVarint32Size(header.length);
-        writeRawVarint32(out, headerLen);
+        writeRawVarint32(out, header.length);
         if (message.getBody() != null) {
             byte[] body = ProtostuffSerializeUtil.encode(message.getBody());
             out.ensureWritable(headerLen + header.length + body.length);
