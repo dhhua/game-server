@@ -13,6 +13,7 @@
         <module>proto-export</module>
         <module>client-test</module>
         <module>server-test</module>
+        <module>project-common</module>
     </modules>
 
     <parent>

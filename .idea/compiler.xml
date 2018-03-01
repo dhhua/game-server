@@ -7,6 +7,8 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="client-test" />
+        <module name="project-common" />
+        <module name="proto-export" />
         <module name="server-engine" />
         <module name="server-test" />
       </profile>
@@ -20,6 +22,7 @@
     <bytecodeTargetLevel>
       <module name="client-test" target="1.8" />
       <module name="game-server" target="1.8" />
+      <module name="project-common" target="1.8" />
       <module name="proto-export" target="1.8" />
       <module name="proto-expose" target="1.8" />
       <module name="proto-expost" target="1.8" />

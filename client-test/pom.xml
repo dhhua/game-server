@@ -18,5 +18,10 @@
             <artifactId>server-engine</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.dredh</groupId>
+            <artifactId>project-common</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
 </project>

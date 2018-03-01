@@ -19,14 +19,26 @@ public class CmdHandler extends SimpleChannelInboundHandler<Message> {
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, Message request) throws Exception {
         CmdHeader header = request.getHeader();
-        if (header.getType() != MessageType.CMD) {
-            //TODO 非CMD请求暂时不处理
-            return;
-        }
-        HandlerMapping handlerMapping = RouterMapper.getInstance().getHandlerMapping(header.getRoute());
-        Object result = handlerMapping.getCommandMethod().invoke(handlerMapping.getHandler(), request.getBody());
+        //TODO 封装
+        switch (header.getType()) {
+            case MessageType.HEART_BEAT: return;
+            case MessageType.CMD: {
+                HandlerMapping mapping = RouterMapper.getInstance().getHandlerMapping(header.getRoute());
+                Object result = mapping.getCommandMethod().invoke(mapping.getHandler(), request.getBody());
 
-        CmdHeader responseHeader = new CmdHeader(MessageType.CMD, "response." + header.getRoute(), true);
-        ctx.writeAndFlush(new Message(responseHeader, result));
+                CmdHeader responseHeader = new CmdHeader(MessageType.CMD, "response." + header.getRoute(), true);
+                ctx.writeAndFlush(new Message(responseHeader, result));
+                break;
+            }
+            case MessageType.SYSTEM: {
+                HandlerMapping mapping = RouterMapper.getInstance().getHandlerMapping(header.getRoute());
+                Object result = mapping.getCommandMethod().invoke(mapping.getHandler(), request.getBody(), ctx.channel());
+
+                CmdHeader responseHeader = new CmdHeader(MessageType.CMD, "response." + header.getRoute(), true);
+                ctx.writeAndFlush(new Message(responseHeader, result));
+                break;
+            }
+        }
+
     }
 }

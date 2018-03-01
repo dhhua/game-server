@@ -1,5 +1,6 @@
 package com.dredh;
 
+import com.dredh.handler.user.LoginRequest;
 import com.dredh.model.CmdHeader;
 import com.dredh.model.Message;
 import io.netty.bootstrap.Bootstrap;
@@ -31,7 +32,9 @@ public class GameClient {
             while (true) {
                 Thread.sleep(1000);
                 ch.writeAndFlush(new Message(new CmdHeader((byte)1, "test.TestHandler.test", true), "test"));
+                ch.writeAndFlush(new Message(new CmdHeader((byte)2, "user.UserHandler.login", true), new LoginRequest("handsomeBoy", "123456")));
             }
+
             // Close the connection.
             //ch.closeFuture().sync();
 

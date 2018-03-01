@@ -9,18 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>server-test</artifactId>
+    <artifactId>project-common</artifactId>
 
-    <dependencies>
-        <dependency>
-            <groupId>com.dredh</groupId>
-            <artifactId>server-engine</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.dredh</groupId>
-            <artifactId>project-common</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-    </dependencies>
+
 </project>
